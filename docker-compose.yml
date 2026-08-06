@@ -52,6 +52,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: frontend_container
+    restart: on-failure
     depends_on:
       springboot-app:
         condition: service_started
