@@ -3,7 +3,6 @@ package com.finance.PaymentProcessing.controller;
 import com.finance.PaymentProcessing.dto.PaymentHistoryResponse;
 import com.finance.PaymentProcessing.service.HistoryService;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,12 +15,12 @@ public class HistoryController {
     }
 
     @GetMapping
-    public List<PaymentHistoryResponse> getPaymentHistory(@PathVariable UUID paymentId) {
+    public List<PaymentHistoryResponse> getPaymentHistory(@PathVariable String paymentId) {
         return service.getHistory(paymentId);
     }
 
     @GetMapping("/timeline")
-    public List<PaymentHistoryResponse> getTransactionTimeline(@PathVariable UUID paymentId) {
+    public List<PaymentHistoryResponse> getTransactionTimeline(@PathVariable String paymentId) {
         return service.getHistory(paymentId);
     }
 }

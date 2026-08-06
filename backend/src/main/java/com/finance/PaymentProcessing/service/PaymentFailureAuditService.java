@@ -10,8 +10,8 @@ import com.finance.PaymentProcessing.model.PaymentStatus;
 import com.finance.PaymentProcessing.model.PaymentType;
 import com.finance.PaymentProcessing.repository.BeneficiaryRepository;
 import com.finance.PaymentProcessing.repository.PaymentRepository;
+import com.finance.PaymentProcessing.util.UniqueIdGenerator;
 import java.math.BigDecimal;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +34,7 @@ public class PaymentFailureAuditService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void persistFailedAttempt(PaymentRequest request, String idempotencyKey, RuntimeException ex) {
-        UUID beneficiaryId = resolveBeneficiaryId(request.beneficiaryId());
+        String beneficiaryId = resolveBeneficiaryId(request.beneficiaryId());
         if (beneficiaryId == null) {
             return;
         }
@@ -49,7 +49,7 @@ public class PaymentFailureAuditService {
             failed.setPayerId(request.payerId());
             failed.setPaymentType(request.paymentType() != null ? request.paymentType() : PaymentType.BILL_PAYMENT);
             failed.setInvoiceId(null);
-            failed.setIdempotencyKey(idempotencyKey + "-FAILED-" + UUID.randomUUID());
+            failed.setIdempotencyKey(idempotencyKey + "-FAILED-" + UniqueIdGenerator.generate());
             failed.setStatus(PaymentStatus.FAILED);
 
             Payment saved = paymentRepository.save(failed);
@@ -60,7 +60,7 @@ public class PaymentFailureAuditService {
         }
     }
 
-    private UUID resolveBeneficiaryId(UUID requestedId) {
+    private String resolveBeneficiaryId(String requestedId) {
         if (requestedId != null && beneficiaryRepository.existsById(requestedId)) {
             return requestedId;
         }

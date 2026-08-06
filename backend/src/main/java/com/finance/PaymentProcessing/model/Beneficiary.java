@@ -1,9 +1,7 @@
 package com.finance.PaymentProcessing.model;
 
-import java.util.UUID;
-
 public class Beneficiary {
-    private UUID beneficiaryId;
+    private String beneficiaryId;
     private String name;
     private String accountNumber;
     private String bankName;
@@ -11,8 +9,8 @@ public class Beneficiary {
     private String email;
     private String phone;
 
-    public UUID getBeneficiaryId() { return beneficiaryId; }
-    public void setBeneficiaryId(UUID beneficiaryId) { this.beneficiaryId = beneficiaryId; }
+    public String getBeneficiaryId() { return beneficiaryId; }
+    public void setBeneficiaryId(String beneficiaryId) { this.beneficiaryId = beneficiaryId; }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getAccountNumber() { return accountNumber; }

@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import AsyncState from "../components/AsyncState";
@@ -7,6 +6,7 @@ import SkeletonTable from "../components/SkeletonTable";
 import { useCurrentUser } from "../context/UserContext";
 import { api, getErrorText } from "../lib/api";
 import { CURRENCIES } from "../lib/constants";
+import { generateUniqueId } from "../lib/id";
 
 const accountNumberRegex = /^[A-Za-z0-9]{6,34}$/;
 const ifscRegex = /^[A-Z]{4}0[A-Z0-9]{6}$/;
@@ -155,6 +155,7 @@ function CreatePaymentSection() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount
     loadDependencies();
   }, [loadDependencies]);
 
@@ -173,7 +174,7 @@ function CreatePaymentSection() {
     event.preventDefault();
     if (!validate()) return;
     setSubmitting(true);
-    const retryKey = idempotencyKey || uuidv4();
+    const retryKey = idempotencyKey || generateUniqueId();
     if (!idempotencyKey) setIdempotencyKey(retryKey);
     const body = {
       amount: Number(form.amount),
@@ -509,6 +510,7 @@ function SourceAccountsSection() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount
     loadAccounts();
   }, [loadAccounts]);
 
@@ -567,7 +569,7 @@ function SourceAccountsSection() {
                 type="button"
                 className="btn-primary whitespace-nowrap"
                 onClick={() =>
-                  setForm((p) => ({ ...p, accountId: crypto.randomUUID() }))
+                  setForm((p) => ({ ...p, accountId: generateUniqueId() }))
                 }
               >
                 Generate Unique ID
@@ -685,6 +687,7 @@ function BeneficiariesSection() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount
     loadBeneficiaries();
   }, [loadBeneficiaries]);
 

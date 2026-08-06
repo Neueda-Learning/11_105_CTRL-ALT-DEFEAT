@@ -5,7 +5,6 @@ import com.finance.PaymentProcessing.service.BeneficiaryService;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,7 +29,7 @@ public class BeneficiaryController {
     }
 
     @GetMapping("/{id}")
-    public BeneficiaryResponse getBeneficiary(@PathVariable UUID id) {
+    public BeneficiaryResponse getBeneficiary(@PathVariable String id) {
         return service.getBeneficiary(id);
     }
 }

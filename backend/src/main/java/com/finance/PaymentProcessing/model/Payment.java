@@ -2,10 +2,9 @@ package com.finance.PaymentProcessing.model;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.UUID;
 
 public class Payment {
-    private UUID paymentId;
+    private String paymentId;
     private BigDecimal amount;
     private String currency;
     private String reference;
@@ -14,10 +13,10 @@ public class Payment {
     private PaymentType paymentType;
     private PaymentMethod paymentMethod;
     private CardType cardType;
-    private UUID payerId;
+    private String payerId;
     private String invoiceId;
-    private UUID sourceAccountId;
-    private UUID beneficiaryId;
+    private String sourceAccountId;
+    private String beneficiaryId;
     private String cardLast4;
     private String cardHolderName;
     private String upiId;
@@ -25,11 +24,11 @@ public class Payment {
     private Instant createdAt;
     private Instant updatedAt;
 
-    public UUID getPaymentId() {
+    public String getPaymentId() {
         return paymentId;
     }
 
-    public void setPaymentId(UUID paymentId) {
+    public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
     }
 
@@ -97,11 +96,11 @@ public class Payment {
         this.cardType = cardType;
     }
 
-    public UUID getPayerId() {
+    public String getPayerId() {
         return payerId;
     }
 
-    public void setPayerId(UUID payerId) {
+    public void setPayerId(String payerId) {
         this.payerId = payerId;
     }
 
@@ -113,19 +112,19 @@ public class Payment {
         this.invoiceId = invoiceId;
     }
 
-    public UUID getSourceAccountId() {
+    public String getSourceAccountId() {
         return sourceAccountId;
     }
 
-    public void setSourceAccountId(UUID sourceAccountId) {
+    public void setSourceAccountId(String sourceAccountId) {
         this.sourceAccountId = sourceAccountId;
     }
 
-    public UUID getBeneficiaryId() {
+    public String getBeneficiaryId() {
         return beneficiaryId;
     }
 
-    public void setBeneficiaryId(UUID beneficiaryId) {
+    public void setBeneficiaryId(String beneficiaryId) {
         this.beneficiaryId = beneficiaryId;
     }
 

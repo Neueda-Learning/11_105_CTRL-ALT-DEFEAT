@@ -1,15 +1,13 @@
 package com.finance.PaymentProcessing.model;
 
-import java.util.UUID;
-
 public class BankAccount {
-    private UUID accountId;
+    private String accountId;
     private String accountNumber;
     private String accountHolderName;
     private boolean active = true;
 
-    public UUID getAccountId() { return accountId; }
-    public void setAccountId(UUID accountId) { this.accountId = accountId; }
+    public String getAccountId() { return accountId; }
+    public void setAccountId(String accountId) { this.accountId = accountId; }
     public String getAccountNumber() { return accountNumber; }
     public void setAccountNumber(String accountNumber) { this.accountNumber = accountNumber; }
     public String getAccountHolderName() { return accountHolderName; }

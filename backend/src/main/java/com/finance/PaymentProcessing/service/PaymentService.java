@@ -6,7 +6,6 @@ import com.finance.PaymentProcessing.exception.ConflictException;
 import com.finance.PaymentProcessing.exception.NotFoundException;
 import com.finance.PaymentProcessing.model.*;
 import com.finance.PaymentProcessing.repository.*;
-import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -113,11 +112,11 @@ public class PaymentService {
     }
 
     @Transactional(readOnly = true)
-    public PaymentResponse getPayment(UUID id) {
+    public PaymentResponse getPayment(String id) {
         return toResponse(find(id));
     }
 
-    public PaymentResponse updateStatus(UUID id, PaymentStatusRequest request) {
+    public PaymentResponse updateStatus(String id, PaymentStatusRequest request) {
         Payment payment = find(id);
         validationService.validateStatusTransition(payment.getStatus(), request.status());
         PaymentStatus old = payment.getStatus();
@@ -134,7 +133,7 @@ public class PaymentService {
                 .map(this::toResponse);
     }
 
-    private Payment find(UUID id) {
+    private Payment find(String id) {
         return paymentRepository.findById(id).orElseThrow(() -> new NotFoundException("Payment not found: " + id));
     }
 

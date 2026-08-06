@@ -123,11 +123,13 @@ export default function PaymentsPage() {
   }, [statusFilter]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount
     loadPayments();
   }, [loadPayments]);
 
   // Reset to page 0 when filters or sort change
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- resetting pagination on filter change
     setPage(0);
   }, [statusFilter, timeline, sortBy]);
 

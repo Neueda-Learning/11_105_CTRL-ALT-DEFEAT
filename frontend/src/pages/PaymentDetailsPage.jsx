@@ -5,7 +5,7 @@ import AsyncState from "../components/AsyncState";
 import PageHeader from "../components/PageHeader";
 import StatusBadge from "../components/StatusBadge";
 import { api, getErrorText } from "../lib/api";
-import { NEXT_STATUS_FLOW, PAYMENT_STATUSES } from "../lib/constants";
+import { NEXT_STATUS_FLOW } from "../lib/constants";
 import { formatDateTime } from "../lib/formatters";
 
 const STAGE_ORDER = ["CREATED", "VALIDATED", "SENT", "COMPLETED"];
@@ -51,6 +51,7 @@ export default function PaymentDetailsPage() {
   }, [paymentId]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount
     loadPayment();
   }, [loadPayment]);
 
@@ -60,6 +61,7 @@ export default function PaymentDetailsPage() {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- derived default selection
     setNextStatus(allowedNextStatuses[0] ?? "");
   }, [allowedNextStatuses]);
 
@@ -106,7 +108,6 @@ export default function PaymentDetailsPage() {
   }, [history]);
 
   const isFailed = payment?.status === "FAILED";
-  const failedEntry = auditMap["FAILED"];
 
   // Build the visual stage list: normal flow + inject FAILED if applicable
   const stagesToShow = useMemo(() => {

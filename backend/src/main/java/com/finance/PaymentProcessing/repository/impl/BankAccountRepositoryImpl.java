@@ -2,11 +2,11 @@ package com.finance.PaymentProcessing.repository.impl;
 
 import com.finance.PaymentProcessing.model.BankAccount;
 import com.finance.PaymentProcessing.repository.BankAccountRepository;
+import com.finance.PaymentProcessing.util.UniqueIdGenerator;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -25,7 +25,7 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
 
     private static BankAccount map(ResultSet rs) throws SQLException {
         BankAccount a = new BankAccount();
-        a.setAccountId(UUID.fromString(rs.getString("account_id")));
+        a.setAccountId(rs.getString("account_id"));
         a.setAccountNumber(rs.getString("account_number"));
         a.setAccountHolderName(rs.getString("account_holder_name"));
         a.setActive(rs.getBoolean("active"));
@@ -35,11 +35,11 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     @Override
     public BankAccount save(BankAccount account) {
         if (account.getAccountId() == null) {
-            // INSERT: generate UUID here so MySQL receives it as a CHAR(36)
-            account.setAccountId(UUID.randomUUID());
+            // INSERT: generate a unique 9-digit id here so MySQL receives it as a CHAR(9)
+            account.setAccountId(UniqueIdGenerator.generate());
             jdbc.update(
                 "INSERT INTO bank_accounts (account_id, account_number, account_holder_name, active) VALUES (?, ?, ?, ?)",
-                account.getAccountId().toString(),
+                account.getAccountId(),
                 account.getAccountNumber(),
                 account.getAccountHolderName(),
                 account.isActive()
@@ -51,18 +51,18 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
                 account.getAccountNumber(),
                 account.getAccountHolderName(),
                 account.isActive(),
-                account.getAccountId().toString()
+                account.getAccountId()
             );
         }
         return account;
     }
 
     @Override
-    public Optional<BankAccount> findById(UUID id) {
+    public Optional<BankAccount> findById(String id) {
         List<BankAccount> results = jdbc.query(
             "SELECT * FROM bank_accounts WHERE account_id = ?",
             ROW_MAPPER,
-            id.toString()
+            id
         );
         return results.isEmpty() ? Optional.empty() : Optional.of(results.get(0));
     }
@@ -73,11 +73,11 @@ public class BankAccountRepositoryImpl implements BankAccountRepository {
     }
 
     @Override
-    public boolean existsById(UUID id) {
+    public boolean existsById(String id) {
         Integer count = jdbc.queryForObject(
             "SELECT COUNT(*) FROM bank_accounts WHERE account_id = ?",
             Integer.class,
-            id.toString()
+            id
         );
         return count != null && count > 0;
     }

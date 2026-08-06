@@ -6,7 +6,6 @@ import com.finance.PaymentProcessing.model.*;
 import com.finance.PaymentProcessing.repository.PaymentHistoryRepository;
 import com.finance.PaymentProcessing.repository.PaymentRepository;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +33,7 @@ public class HistoryService {
     }
 
     @Transactional(readOnly = true)
-    public List<PaymentHistoryResponse> getHistory(UUID paymentId) {
+    public List<PaymentHistoryResponse> getHistory(String paymentId) {
         if (!paymentRepository.existsById(paymentId))
             throw new NotFoundException("Payment not found: " + paymentId);
         return historyRepository.findByPaymentIdOrderByTimestampAsc(paymentId).stream()

@@ -22,6 +22,7 @@ export function UserProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount
     fetchCurrentUser();
   }, [fetchCurrentUser]);
 
@@ -32,6 +33,7 @@ export function UserProvider({ children }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components -- hook is tightly coupled to UserProvider
 export function useCurrentUser() {
   return useContext(UserContext);
 }

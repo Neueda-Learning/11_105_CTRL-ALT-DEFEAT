@@ -369,7 +369,7 @@ function IncomingCreateSection({ onCreated }) {
               onChange={(event) =>
                 setForm((prev) => ({ ...prev, destinationAccountId: event.target.value }))
               }
-              placeholder="UUID"
+              placeholder="e.g. 123456789"
             />
           </label>
 
@@ -449,6 +449,7 @@ export default function IncomingPaymentsPage() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount
     loadIncomingPayments();
   }, [loadIncomingPayments]);
 

@@ -5,7 +5,6 @@ import com.finance.PaymentProcessing.model.PaymentStatus;
 import com.finance.PaymentProcessing.service.PaymentService;
 import jakarta.validation.Valid;
 import java.net.URI;
-import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -30,12 +29,12 @@ public class PaymentController {
     }
 
     @GetMapping("/{id}")
-    public PaymentResponse getPayment(@PathVariable UUID id) {
+    public PaymentResponse getPayment(@PathVariable String id) {
         return service.getPayment(id);
     }
 
     @PatchMapping("/{id}/status")
-    public PaymentResponse updatePaymentStatus(@PathVariable UUID id,
+    public PaymentResponse updatePaymentStatus(@PathVariable String id,
             @Valid @RequestBody PaymentStatusRequest request) {
         return service.updateStatus(id, request);
     }

@@ -4,6 +4,7 @@ import AsyncState from "../components/AsyncState";
 import PageHeader from "../components/PageHeader";
 import SkeletonTable from "../components/SkeletonTable";
 import { api, getErrorText } from "../lib/api";
+import { generateUniqueId } from "../lib/id";
 
 const accountNumberRegex = /^[A-Za-z0-9]{6,34}$/;
 
@@ -39,6 +40,7 @@ export default function SourceAccountsPage() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount
     loadAccounts();
   }, [loadAccounts]);
 
@@ -109,7 +111,7 @@ export default function SourceAccountsPage() {
                 type="button"
                 className="btn-primary whitespace-nowrap"
                 onClick={() =>
-                  setForm((prev) => ({ ...prev, accountId: crypto.randomUUID() }))
+                  setForm((prev) => ({ ...prev, accountId: generateUniqueId() }))
                 }
               >
                 Generate Unique ID

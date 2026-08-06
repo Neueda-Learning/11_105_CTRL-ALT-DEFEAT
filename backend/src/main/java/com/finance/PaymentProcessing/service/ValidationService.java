@@ -11,7 +11,6 @@ import com.finance.PaymentProcessing.repository.BankAccountRepository;
 import java.math.BigDecimal;
 import java.time.YearMonth;
 import java.util.Set;
-import java.util.UUID;
 import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
 
@@ -37,12 +36,12 @@ public class ValidationService {
             throw new BadRequestException("Unsupported currency. Use INR, USD, EUR, or GBP");
     }
 
-    public void validateBeneficiary(UUID beneficiaryId) {
+    public void validateBeneficiary(String beneficiaryId) {
         if (!beneficiaryRepository.existsById(beneficiaryId))
             throw new NotFoundException("Beneficiary not found: " + beneficiaryId);
     }
 
-    public void validateSourceAccount(UUID sourceAccountId, UUID beneficiaryId) {
+    public void validateSourceAccount(String sourceAccountId, String beneficiaryId) {
         var account = accountRepository.findById(sourceAccountId)
             .orElseThrow(() -> new NotFoundException("INVALID_ACCOUNT", "Source account not found: " + sourceAccountId));
         var beneficiary = beneficiaryRepository.findById(beneficiaryId)
@@ -64,7 +63,7 @@ public class ValidationService {
     }
 
     public void validateMethodSpecificDetails(PaymentMethod paymentMethod,
-            UUID beneficiaryId,
+            String beneficiaryId,
             CardType cardType,
             String cardHolderName,
             String cardNumber,
@@ -86,7 +85,7 @@ public class ValidationService {
         validateCardDetails(beneficiaryId, cardType, cardHolderName, cardNumber, expiryMonth, expiryYear, cvv);
     }
 
-    private void validateNetBankingDetails(UUID beneficiaryId,
+    private void validateNetBankingDetails(String beneficiaryId,
             CardType cardType,
             String cardHolderName,
             String cardNumber,
@@ -103,7 +102,7 @@ public class ValidationService {
         }
     }
 
-    private void validateUpiDetails(UUID beneficiaryId,
+    private void validateUpiDetails(String beneficiaryId,
             CardType cardType,
             String cardHolderName,
             String cardNumber,
@@ -123,7 +122,7 @@ public class ValidationService {
         }
     }
 
-    private void validateCardDetails(UUID beneficiaryId,
+    private void validateCardDetails(String beneficiaryId,
             CardType cardType,
             String cardHolderName,
             String cardNumber,

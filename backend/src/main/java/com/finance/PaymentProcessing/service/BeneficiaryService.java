@@ -6,7 +6,6 @@ import com.finance.PaymentProcessing.exception.NotFoundException;
 import com.finance.PaymentProcessing.model.Beneficiary;
 import com.finance.PaymentProcessing.repository.BeneficiaryRepository;
 import java.util.List;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,11 +37,11 @@ public class BeneficiaryService {
     }
 
     @Transactional(readOnly = true)
-    public BeneficiaryResponse getBeneficiary(UUID id) {
+    public BeneficiaryResponse getBeneficiary(String id) {
         return toResponse(find(id));
     }
 
-    private Beneficiary find(UUID id) {
+    private Beneficiary find(String id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Beneficiary not found: " + id));
     }
 

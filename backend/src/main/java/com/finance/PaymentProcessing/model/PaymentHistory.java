@@ -1,11 +1,10 @@
 package com.finance.PaymentProcessing.model;
 
 import java.time.Instant;
-import java.util.UUID;
 
 public class PaymentHistory {
-    private UUID historyId;
-    private UUID paymentId;
+    private String historyId;
+    private String paymentId;
     private PaymentStatus oldStatus;
     private PaymentStatus newStatus;
     private Instant timestamp;
@@ -13,10 +12,10 @@ public class PaymentHistory {
     private String errorCode;
     private String actor;
 
-    public UUID getHistoryId() { return historyId; }
-    public void setHistoryId(UUID historyId) { this.historyId = historyId; }
-    public UUID getPaymentId() { return paymentId; }
-    public void setPaymentId(UUID paymentId) { this.paymentId = paymentId; }
+    public String getHistoryId() { return historyId; }
+    public void setHistoryId(String historyId) { this.historyId = historyId; }
+    public String getPaymentId() { return paymentId; }
+    public void setPaymentId(String paymentId) { this.paymentId = paymentId; }
     public PaymentStatus getOldStatus() { return oldStatus; }
     public void setOldStatus(PaymentStatus oldStatus) { this.oldStatus = oldStatus; }
     public PaymentStatus getNewStatus() { return newStatus; }

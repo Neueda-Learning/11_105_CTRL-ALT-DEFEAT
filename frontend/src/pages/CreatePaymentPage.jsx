@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from "uuid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
 import AsyncState from "../components/AsyncState";
@@ -6,6 +5,7 @@ import PageHeader from "../components/PageHeader";
 import { useCurrentUser } from "../context/UserContext";
 import { api, getErrorText } from "../lib/api";
 import { CURRENCIES } from "../lib/constants";
+import { generateUniqueId } from "../lib/id";
 
 const initialForm = {
   sourceAccountId: "",
@@ -50,6 +50,7 @@ export default function CreatePaymentPage() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- initial fetch on mount
     loadDependencies();
   }, [loadDependencies]);
 
@@ -125,7 +126,7 @@ export default function CreatePaymentPage() {
     }
 
     setSubmitting(true);
-    const retryKey = idempotencyKey || uuidv4();
+    const retryKey = idempotencyKey || generateUniqueId();
     if (!idempotencyKey) {
       setIdempotencyKey(retryKey);
     }
