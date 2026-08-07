@@ -3,7 +3,7 @@ pipeline {
     agent any
 
     environment {
-        GIT_URL = 'https://github.com/Diksha7876/11_105_CTRL-ALT-DEFEAT.git'
+        GIT_URL = 'https://github.com/prerna2111/11_105_CTRL-ALT-DEFEAT.git'
         BRANCH = 'main'
     }
 
@@ -19,9 +19,7 @@ pipeline {
 
         stage('Stop Existing Containers') {
             steps {
-                dir('backend') {
-                    sh 'docker-compose down || true'
-                }
+                sh 'docker-compose down || true'
             }
         }
 
@@ -29,17 +27,13 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                dir('backend') {
-                    sh 'docker-compose build --no-cache'
-                }
+                sh 'docker-compose build --no-cache'
             }
         }
 
         stage('Deploy') {
             steps {
-                dir('backend') {
-                    sh 'docker-compose up -d'
-                }
+                sh 'docker-compose up -d --force-recreate'
             }
         }
 
